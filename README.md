@@ -85,3 +85,8 @@ It is not surprise that adam t20 perform worst, and adam t20-t20 seems has the s
 However, if we zoom into boundary:
 
 <img src="https://github.com/youli-jlu/PyTorch_Adam_vs_LBFGS/blob/main/line_plot_boundary.png" width="600"/>
+
+The green line adam t20-t20 derivate a lot from target.
+
+### Training loss function
+<img src="https://github.com/youli-jlu/PyTorch_Adam_vs_LBFGS/blob/main/adam_vs_lbfgs_in_log.png" width="600"/>
