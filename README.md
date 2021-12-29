@@ -89,4 +89,14 @@ However, if we zoom into boundary:
 The green line adam t20-t20 derivate a lot from target.
 
 ### Training loss function
+The loss decay curve in log() can illustrate the fitting error better.
+
+Adam t20-t20 still worse than lbfgs t20 in several order of magnitudes. 
+
 <img src="https://github.com/youli-jlu/PyTorch_Adam_vs_LBFGS/blob/main/adam_vs_lbfgs_in_log.png" width="600"/>
+
+### computational cost
+Almost same due to parallel.
+
+## Conclusion
+Please try second-order optimizer in regression problem if possible, especially for small network.
