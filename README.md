@@ -59,8 +59,8 @@ optimizer_lbfgs= torch.optim.LBFGS(model.parameters(), lr=1,
     ¦   line_search_fn="strong_wolfe"
     ¦   )
 ```
-
-The code for this simulation can be found in src/lbfgs_simple.py
+## Code
+The code for this test can be found in optimizer_test/
 
 ## Fitting detail:
 
