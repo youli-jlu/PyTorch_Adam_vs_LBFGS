@@ -50,16 +50,38 @@ def train(dataloader, model, loss_fn, optimizer):
     ¦   ¦   print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
     return loss_train
 ```
-The code for this simulation can be found in src/
 
-## Fitting result
+Also, I use strong_wolfe option. Otherwise, the loss function will become very large (I don't know the reason).
+
+```python
+optimizer_lbfgs= torch.optim.LBFGS(model.parameters(), lr=1,
+    ¦   history_size=100, max_iter=20,
+    ¦   line_search_fn="strong_wolfe"
+    ¦   )
+```
+
+The code for this simulation can be found in src/lbfgs_simple.py
+
+## Fitting detail:
+
+### NN structure
 I compared two NN structure:
 
-1. One hidden layer with 20 neuron. Linear output. I use 1-t20-1 to detnote this situation while "t" means using tanh for activation function.
-2. Two hidden layer with 20 neuron each. Linear output. I use 1-t20-t20-1 to detnote this.
+1. One hidden layer with 20 neuron. Linear output. I use t20 to detnote this situation while "t" means using tanh for activation function.
+2. Two hidden layer with 20 neuron each. Linear output. I use t20-t20 to detnote this.
 
 
-### Sinc function
+### Train data
+I use 20000 sampled points from Sinc function:
 x in [-1.1], y=sinc(x)=( 1 if x=0 or sin(x)/x if else )
 
+And 80% data was randomly chosen for training.
+
+## Result
 ### prediction plot
+<img src="https://github.com/youli-jlu/PyTorch_Adam_vs_LBFGS/blob/main/line_plot.png" width="600"/>
+It is not surprise that adam t20 perform worst, and adam t20-t20 seems has the same performance with l-bfgs
+ 
+However, if we zoom into boundary:
+
+<img src="https://github.com/youli-jlu/PyTorch_Adam_vs_LBFGS/blob/main/line_plot_boundary.png" width="600"/>
