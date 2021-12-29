@@ -2,25 +2,25 @@
 Curve fitting comparison between Adam and L-BFGS optimizer
 
 ## Motivation
-I'm studying the NN tools for theoritical chemistry simulation, espacially potential energy surface (PES) fitting.
+I'm studying the NN tools for theoretical chemistry simulation, especially potential energy surface (PES) fitting.
 
-At first, I chose tensorflow for NN simulation. 
-I have succesfully constructed a Diabatic PES in tensorflow 2.4 with adam optimizer, and the result has been published in [J. Chem. Phys. 155, 214102 (2021)](https://aip.scitation.org/doi/10.1063/5.0072004).
-However, some of reviews said the second optimizer, like Levenberg-Marquardt, can provied better convergence result efficiently.
+At first, I chose TensorFlow for NN simulation. 
+I have successfully constructed a Diabatic PES in TensorFlow 2.4 with adam optimizer, and the result has been published in [J. Chem. Phys. 155, 214102 (2021)](https://aip.scitation.org/doi/10.1063/5.0072004).
+However, some of the reviews said the second optimizer, like Levenberg-Marquardt, can provide better convergence results efficiently.
 In my previous simulation, it usually takes almost 10^7 epochs in a week for convergency, which can be 10^3 level in L-M optimizer in review.
-So, I really want ot know the performance of second optimizer in regression problem.
+So, I want to test the performance of the second optimizer in the regression problem.
 
 ## previous comparison
-- [Fabio Di Marco](https://github.com/fabiodimarco/tf-levenberg-marquardt) has compared Levenberg-Marquardt and Adam with tensorflow. Target function is sinc function.
+- [Fabio Di Marco](https://github.com/fabiodimarco/tf-levenberg-marquardt) has compared Levenberg-Marquardt and Adam with TensorFlow. The target function is sinc function.
 - [Soham Pal](https://soham.dev/posts/linear-regression-pytorch/) has compared L-BFGS and Adam with PyTorch in linear regression problem.
-- [NN-PES review](https://pubs.acs.org/doi/10.1021/acs.chemrev.0c00665) has compared some optimizer but is lack of details. And matlab has more study cost(in my point of view). 
+- [NN-PES review](https://pubs.acs.org/doi/10.1021/acs.chemrev.0c00665) has compared some optimizers but it lacks details. And matlab has more study costs (in my point of view). 
 
 ## L-BFGS in PyTorch
-Since tensorflow do not have official second optimizer, I will use pyTorch L-BFGS optimizer in this test.
+Since TensorFlow does not have an official second optimizer, I will use pyTorch L-BFGS optimizer in this test.
 
-You can find some information about L-BFGS algorithms in many website, and I will not disccus this.
-However, when you use L-BFGS in PyTorch, you need to define a 'closure' function for gradiant evaluation.
-I'm not so familliar for optimization algorithms, and simply follow the code written by [Soham Pal](https://soham.dev/posts/linear-regression-pytorch/). 
+You can find some information about L-BFGS algorithms on many websites, and I will not discuss this.
+However, when you use L-BFGS in PyTorch, you need to define a 'closure' function for gradient evaluation.
+I'm not so familiar with optimization algorithms, and simply follow the code written by [Soham Pal](https://soham.dev/posts/linear-regression-pytorch/). 
 The 'train' function will be:
 ```python
 def train(dataloader, model, loss_fn, optimizer):
@@ -65,17 +65,17 @@ The code for this simulation can be found in src/lbfgs_simple.py
 ## Fitting detail:
 
 ### NN structure
-I compared two NN structure:
+I compared two NN structures:
 
-1. One hidden layer with 20 neuron. Linear output. I use t20 to detnote this situation while "t" means using tanh for activation function.
-2. Two hidden layer with 20 neuron each. Linear output. I use t20-t20 to detnote this.
+1. One hidden layer with 20 neurons. Linear output. I use t20 to denote this situation while "t" means using tanh for activation function.
+2. Two hidden layers with 20 neurons each. Linear output. I use t20-t20 to denote this.
 
 
 ### Train data
 I use 20000 sampled points from Sinc function:
 x in [-1.1], y=sinc(x)=( 1 if x=0 or sin(x)/x if else )
 
-And 80% data was randomly chosen for training.
+And 80% of data was randomly chosen for training.
 
 ## Result
 ### prediction plot
@@ -86,17 +86,17 @@ However, if we zoom into boundary:
 
 <img src="https://github.com/youli-jlu/PyTorch_Adam_vs_LBFGS/blob/main/line_plot_boundary.png" width="600"/>
 
-The green line adam t20-t20 derivate a lot from target.
+The green line adam t20-t20 derivate a lot from the target.
 
 ### Training loss function
 The loss decay curve in log() can illustrate the fitting error better.
 
-Adam t20-t20 still worse than lbfgs t20 in several order of magnitudes. 
+Adam t20-t20 is still worse than lbfgs t20 in several orders of magnitude. 
 
 <img src="https://github.com/youli-jlu/PyTorch_Adam_vs_LBFGS/blob/main/adam_vs_lbfgs_in_log.png" width="600"/>
 
 ### computational cost
-Almost same due to parallel.
+Almost the same due to parallel.
 
 ## Conclusion
-Please try second-order optimizer in regression problem if possible, especially for small network.
+Please try second-order optimizer in regression problems if possible, especially for small networks.
