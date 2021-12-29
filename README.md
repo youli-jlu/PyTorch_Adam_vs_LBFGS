@@ -96,7 +96,7 @@ Adam t20-t20 is still worse than lbfgs t20 in several orders of magnitude.
 <img src="https://github.com/youli-jlu/PyTorch_Adam_vs_LBFGS/blob/main/adam_vs_lbfgs_in_log.png" width="600"/>
 
 ### computational cost
-Almost the same due to parallel.
+Almost the same due to relative small network. However, second-order optimizer commmonly need more memory for gradient.
 
 ## Conclusion
 Please try second-order optimizer in regression problems if possible, especially for small networks.
